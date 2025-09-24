@@ -28,16 +28,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Color backgroundColor = Colors.white;
+  int redCode = 255;
+  int greenCode = 255;
+  int blueCode = 255;
 
   /// Generates a random RGB color
   void _changeColor() {
     final Random random = Random();
+
+    /// Generate new RGB values
+    redCode = random.nextInt(256);
+    greenCode = random.nextInt(256);
+    blueCode = random.nextInt(256);
+
     setState(() {
+      /// Update background color with the same RGB values
       backgroundColor = Color.fromARGB(
         255, // fully opaque
-        random.nextInt(256), // red
-        random.nextInt(256), // green
-        random.nextInt(256), // blue
+        redCode, // red
+        greenCode, // green
+        blueCode, // blue
       );
     });
   }
@@ -47,12 +57,30 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: _changeColor,
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'RGB: $redCode,$greenCode,$blueCode',
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+        ),
         body: AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
           color: backgroundColor,
           child: const Center(
-            child: Text("Hello there", style: TextStyle(fontSize: 24)),
+            child: Text(
+              "Hello there",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
       ),
