@@ -26,29 +26,28 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+/// The state of [HomePage] which handles background color changes.
 class _HomePageState extends State<HomePage> {
+  /// The current background color.
   Color backgroundColor = Colors.white;
+
+  /// The current red, green, and blue color codes.
   int redCode = 255;
   int greenCode = 255;
   int blueCode = 255;
 
-  /// Generates a random RGB color
+  /// Generates a random RGB color and updates the background.
   void _changeColor() {
     final Random random = Random();
 
-    /// Generate new RGB values
+    // Generate new RGB values
     redCode = random.nextInt(256);
     greenCode = random.nextInt(256);
     blueCode = random.nextInt(256);
 
     setState(() {
-      /// Update background color with the same RGB values
-      backgroundColor = Color.fromARGB(
-        255, // fully opaque
-        redCode, // red
-        greenCode, // green
-        blueCode, // blue
-      );
+      // Update background color
+      backgroundColor = Color.fromARGB(255, redCode, greenCode, blueCode);
     });
   }
 
@@ -57,6 +56,7 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: _changeColor,
       child: Scaffold(
+        /// AppBar that displays current RGB values
         appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -68,17 +68,26 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+
+        /// Body with smooth animated background and rounded text background
         body: AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
           color: backgroundColor,
-          child: const Center(
-            child: Text(
-              "Hello there",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.5), // transparency
+                borderRadius: BorderRadius.circular(30), // rounded corners
+              ),
+              child: const Text(
+                "Hello there",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
