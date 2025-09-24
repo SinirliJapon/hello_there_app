@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-    );
+    return const MaterialApp(home: HomePage());
   }
 }
 
@@ -44,16 +42,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _changeColor,
       child: Scaffold(
-        body: ColoredBox(
+        body: AnimatedContainer(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
           color: backgroundColor,
           child: const Center(
-            child: Text("Hello there"),
+            child: Text("Hello there", style: TextStyle(fontSize: 24)),
           ),
         ),
       ),
