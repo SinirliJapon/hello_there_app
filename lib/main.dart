@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 /// The entry point of the app
@@ -19,19 +20,41 @@ class MyApp extends StatelessWidget {
 }
 
 /// The home page of the app displaying text and handling taps.
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   /// Creates a [HomePage] widget.
   const HomePage({super.key});
 
   @override
-  Widget build(Object context) {
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Color backgroundColor = Colors.white;
+
+  /// Generates a random RGB color
+  void _changeColor() {
+    final Random random = Random();
+    setState(() {
+      backgroundColor = Color.fromARGB(
+        255, // fully opaque
+        random.nextInt(256), // red
+        random.nextInt(256), // green
+        random.nextInt(256), // blue
+      );
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        /// Color changing logic here, will be added later on
-      } ,
-      child: const Scaffold(
-        body: Center(
-          child: Text("Hello there"),
+      onTap: _changeColor,
+      child: Scaffold(
+        body: ColoredBox(
+          color: backgroundColor,
+          child: const Center(
+            child: Text("Hello there"),
+          ),
         ),
       ),
     );
